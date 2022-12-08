@@ -18,12 +18,24 @@
     <ClInclude Include="Eveniment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Locatii.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bilete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Eveniment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Locatii.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bilete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
