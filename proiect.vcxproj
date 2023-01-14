@@ -140,11 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bilete.h" />
+    <ClInclude Include="BiletValid.h" />
     <ClInclude Include="Eveniment.h" />
     <ClInclude Include="Locatie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bilete.cpp" />
+    <ClCompile Include="BiletValid.cpp" />
     <ClCompile Include="Eveniment.cpp" />
     <ClCompile Include="Locatie.cpp" />
     <ClCompile Include="Source.cpp" />

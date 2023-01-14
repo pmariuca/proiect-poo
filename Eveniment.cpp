@@ -271,11 +271,6 @@ Locatie Eveniment::getLocatie()
 	return this->locatie;
 }
 
-void Eveniment::setLocatie(Locatie locatie)
-{
-	this->locatie = locatie;
-}
-
 void Eveniment::getNrBilete(Locatie locatie)
 {
 	bileteDisponibile = locatie.nrLocuriDisponibile;
@@ -324,6 +319,16 @@ Eveniment::~Eveniment()
 		delete[] ora;
 		ora = nullptr;
 	}
+}
+
+void Eveniment::afisare_succes()
+{
+	cout << "Inregistrarea evenimentului a reusit!";
+}
+
+void Eveniment::afisare_erori()
+{
+	cout << "Inregistrarea evenimentului nu a reusit!";
 }
 
 ostream& operator<<(ostream& out, Eveniment ev)

@@ -39,13 +39,15 @@ public:
 	void setBileteDisponibile(int);
 
 	Locatie getLocatie();
-	void setLocatie(Locatie);
 
 	void getNrBilete(Locatie);
 	void literaMare(char*);
 
 	bool operator>(Locatie);
 	bool operator<(Locatie);
+
+	virtual void afisare_succes();
+	virtual void afisare_erori();
 
 	friend ostream& operator<<(ostream&, Eveniment);
 	friend istream& operator>>(istream&, Eveniment&);

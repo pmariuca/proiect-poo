@@ -302,6 +302,16 @@ float Locatie::operator[](int index)
 		return -1;
 }
 
+void Locatie::afisare_succes()
+{
+	cout << "Inregistrarea locatiei a reusit!";
+}
+
+void Locatie::afisare_erori()
+{
+	cout << "Inregistrarea locatiei nu a reusit!";
+}
+
 Locatie::~Locatie()
 {
 	if (sala != nullptr)

@@ -52,6 +52,9 @@ public:
 	void operator*(int);
 	float operator[](int);
 
+	virtual void afisare_succes();
+	virtual void afisare_erori();
+
 	friend ostream& operator<<(ostream&, Locatie);
 	friend istream& operator>>(istream&, Locatie&);
 	friend class Eveniment;
