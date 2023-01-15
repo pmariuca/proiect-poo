@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Locatie
@@ -12,14 +13,14 @@ private:
 	int nrLocuriPeRand;
 	int** sala;
 	int nrLocuriDisponibile;
-	string numeZona;
 	int zone;
+	vector <string> numeZone;
 	float* pret;
 
 public:
 	Locatie();
 
-	Locatie(char*, int, int, int, int**, int, string, int, float*);
+	Locatie(char*, int, int, int, int**, int, int, vector <string>, float*);
 
 	Locatie(const Locatie&);
 
@@ -40,13 +41,17 @@ public:
 
 	int getZone();
 
+	vector<string> getNumeZone();
+	void setNumeZone(vector<string>, int);
+
 	float* getPret();
 	void setPret(float*, int);
 
-	string getNumeZona();
-	void setNumeZona(string);
+	int getNrLocuriDisponibile();
+	void setNrLocuriDisponibile(int);
 
 	void locuriDisponibile(int);
+	void ocupareLoc(int, int);
 	bool nrCorectLocuri();
 
 	void operator*(int);

@@ -1,19 +1,32 @@
 #include "BiletValid.h"
 #include "Bilete.h"
 #include <iostream>
+#include <vector>
 using namespace std;
+
+bool BiletValid::getValid()
+{
+	return valid;
+}
 
 void BiletValid::afisare_valid()
 {
-	valid = 0;
+	cout << "Biletul este valid!";
 }
 
 void BiletValid::afisare_invalid()
 {
-	valid = 1;
+	cout << "Biletul nu este valid!";
 }
 
-bool BiletIntrodus::validare(int id)
+bool BiletIntrodus::validare(int id, Bilete bilet)
 {
-	return (id > 0);
+	for (unsigned i = 0; i < bilet.vector_id.size(); i++)
+	{
+		if (id == bilet.vector_id[i]) 
+			valid = true;
+		else 
+			valid = false;
+	}
+	return valid;
 }

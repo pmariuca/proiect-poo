@@ -17,7 +17,7 @@ private:
 public:
 	Eveniment();
 
-	Eveniment(char*, char*, char*, char*, int);
+	Eveniment(char*, char*, char*, char*, int, Locatie locatie);
 
 	Eveniment(const Eveniment&);
 

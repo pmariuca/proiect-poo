@@ -1,7 +1,7 @@
 #pragma once
 #include "Eveniment.h"
-#include "BiletValid.h"
 #include <iostream>
+#include <vector>
 #include <string>
 using namespace std;
 
@@ -11,25 +11,28 @@ private:
 	const string oras = "Bucuresti";
 	static int id;
 	char* nume;
+	vector<int> vector_id;
 	Eveniment eveniment;
 
 public:
 	Bilete();
 
-	Bilete(char*);
+	Bilete(char*, Eveniment eveniment);
 
 	Bilete(const Bilete&);
 
 	Bilete& operator=(const Bilete&);
 
 	char* getNume();
-
 	void setNume(char*);
 	
 	static int getId();
 	static void setId(int id);
 
-	static void incrementeazaId();
+	vector<int> getVector();
+	void setVector(vector<int>);
+
+	static void genereazaId();
 	bool idCorect(Locatie);
 	
 	bool operator!();
@@ -40,7 +43,10 @@ public:
 
 	friend ostream& operator<<(ostream&, Bilete);
 	friend istream& operator>>(istream&, Bilete&);
+
 	friend class Eveniment;
+	friend class BiletValid;
+	friend class BiletIntrodus;
 
 	~Bilete();
 };

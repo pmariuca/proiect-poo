@@ -2,19 +2,24 @@
 #include "Eveniment.h"
 #include "Bilete.h"
 #include <iostream>
+#include <vector>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 int Bilete::id = 0;
 
 Bilete::Bilete() :oras("Bucuresti")
 {
+	Bilete::id = 0;
+	vector_id.push_back(Bilete::id);
 	nume = new char[2];
 	strcpy_s(nume, 1, "");
 }
 
-Bilete::Bilete(char* nume) :oras(oras)
+Bilete::Bilete(char* nume, Eveniment eveniment) :oras("Bucuresti")
 {
+	genereazaId();
 	if (nume != nullptr)
 	{
 		this->nume = new char[strlen(nume) + 1];
@@ -24,6 +29,7 @@ Bilete::Bilete(char* nume) :oras(oras)
 	{
 		this->nume = nullptr;
 	}
+	this->eveniment = eveniment;
 }
 
 Bilete::Bilete(const Bilete& bil):oras(bil.oras)
@@ -37,6 +43,7 @@ Bilete::Bilete(const Bilete& bil):oras(bil.oras)
 	{
 		nume = nullptr;
 	}
+	this->vector_id = vector_id;
 }
 
 Bilete& Bilete::operator=(const Bilete& bil)
@@ -52,6 +59,7 @@ Bilete& Bilete::operator=(const Bilete& bil)
 		{
 			nume = nullptr;
 		}
+		this->vector_id = vector_id;
 	}
 	return *this;
 }
@@ -94,10 +102,19 @@ void Bilete::setId(int id)
 	else id = NULL;
 }
 	
-
-void Bilete::incrementeazaId()
+vector<int> Bilete::getVector()
 {
-	Bilete::id++;
+	return vector_id;
+}
+
+void Bilete::setVector(vector<int> vector_id)
+{
+	this->vector_id = vector_id;
+}
+
+void Bilete::genereazaId()
+{
+	Bilete::id=rand()%1000;
 }
 
 bool Bilete::idCorect(Locatie locatie)
@@ -137,9 +154,9 @@ Bilete::~Bilete()
 
 ostream& operator<<(ostream& out, Bilete bil)
 {
-	out << "Oras: " << bil.oras;
-	out << "Nume: " << bil.nume;
-	out << "Id: " << bil.id;
+	out << "Oras: " << bil.oras << endl;
+	out << "Nume: " << bil.nume<<endl;
+	out << "Id: " << bil.id<<endl;
 	return out;
 }
 
@@ -154,6 +171,8 @@ istream& operator>>(istream& in, Bilete& bil)
 	}
 	bil.nume = new char[strlen(sir) + 1];
 	strcpy_s(bil.nume, strlen(sir) + 1, sir);
+	cout << "Introduceti numele evenimentului cu litera mica: " << endl;
+	in >> bil.eveniment;
 	return in;
 }
 
@@ -197,7 +216,7 @@ BileteVIP& BileteVIP::operator=(const BileteVIP& bil)
 	{
 		if (bil.oraBufet != "")
 		{
-			this->oraBufet = oraBufet;
+			oraBufet = bil.oraBufet;
 		}
 		else
 		{
@@ -205,7 +224,7 @@ BileteVIP& BileteVIP::operator=(const BileteVIP& bil)
 		}
 		if (bil.meniuCopii != NULL)
 		{
-			this->meniuCopii = meniuCopii;
+			meniuCopii = bil.meniuCopii;
 		}
 		else
 		{
@@ -247,19 +266,21 @@ void BileteVIP::afisare_erori_VIP()
 
 ostream& operator<<(ostream& out, BileteVIP bil)
 {
-	out << "Ora bufet: " << bil.oraBufet;
+	out << "Ora bufet: " << bil.oraBufet << endl;
 	if (bil.meniuCopii == 1)
 	{
-		out << "Meniul de copii nu este disponibil.";
+		out << "Meniul de copii nu este disponibil." << endl;
 	}
 	else 
-		out << "Meniul de copii este disponibil.";
+		out << "Meniul de copii este disponibil." << endl;
 	return out;
 }
 
 istream& operator>>(istream& in, BileteVIP& bil)
 {
+	cout << "Introduceti ora bufetului: " << endl;
 	in >> bil.oraBufet;
+	cout << "Introduceti 1 daca meniul de copii nu este disponibil, 0 daca este disponinil." << endl;
 	in >> bil.meniuCopii;
 	return in;
 }

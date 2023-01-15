@@ -12,12 +12,15 @@ Locatie::Locatie()
 	nrLocuriPeRand = 0;
 	sala = nullptr;
 	nrLocuriDisponibile = 0;
-	numeZona = "Necunoscuta";
 	zone = 0;
+	for (unsigned i = 0; i < zone; i++)
+	{
+		numeZone[i] = "";
+	}
 	pret = nullptr;
 }
 
-Locatie::Locatie(char* numeLocatie, int nrLocuri, int nrRanduri, int nrLocuriPeRand, int** sala, int nrLocuriDisponibile,string numeZona, int zone, float* pret)
+Locatie::Locatie(char* numeLocatie, int nrLocuri, int nrRanduri, int nrLocuriPeRand, int** sala, int nrLocuriDisponibile, int zone, vector <string> numeZone, float* pret)
 {
 	this->numeLocatie = new char[strlen(numeLocatie) + 1];
 	strcpy_s(this->numeLocatie, strlen(numeLocatie) + 1, numeLocatie);
@@ -46,7 +49,14 @@ Locatie::Locatie(char* numeLocatie, int nrLocuri, int nrRanduri, int nrLocuriPeR
 		this->sala = nullptr;
 	}
 	this->nrLocuriDisponibile = nrLocuriDisponibile;
-	this->numeZona = numeZona;
+	if (zone > 0)
+	{
+		for (unsigned i = 0; i < zone; i++)
+		{
+			this->numeZone.push_back(numeZone[i]);
+
+		}
+	}
 	if (pret != nullptr && zone > 0)
 	{
 		this->zone = zone;
@@ -90,7 +100,14 @@ Locatie::Locatie(const Locatie& locatie)
 		sala = nullptr;
 	}
 	nrLocuriDisponibile = locatie.nrLocuriDisponibile;
-	numeZona = locatie.numeZona;
+	if (locatie.zone > 0)
+	{
+		for (unsigned i = 0; i < locatie.zone; i++)
+		{
+			numeZone.push_back(locatie.numeZone[i]);
+
+		}
+	}
 	if (locatie.pret != nullptr && locatie.zone > 0)
 	{
 		zone = locatie.zone;
@@ -141,7 +158,14 @@ Locatie& Locatie::operator=(const Locatie& locatie)
 			sala = nullptr;
 		}
 		nrLocuriDisponibile = locatie.nrLocuriDisponibile;
-		numeZona = locatie.numeZona;
+		if (locatie.zone > 0)
+		{
+			for (unsigned i = 0; i < locatie.zone; i++)
+			{
+				numeZone.push_back(locatie.numeZone[i]);
+
+			}
+		}
 		if (locatie.pret != nullptr && locatie.zone > 0)
 		{
 			zone = locatie.zone;
@@ -163,13 +187,21 @@ Locatie& Locatie::operator=(const Locatie& locatie)
 
 char* Locatie::getNumeLocatie()
 {
-	return numeLocatie;
+	if (numeLocatie == nullptr)
+		return NULL;
+	char* copie = new char[strlen(numeLocatie) + 1];
+	strcpy_s(copie, strlen(numeLocatie) + 1, numeLocatie);
+	return copie;
 }
 
 void Locatie::setNumeLocatie(char* nume)
 {
-	numeLocatie = new char[strlen(nume) + 1];
-	strcpy_s(numeLocatie, strlen(nume) + 1, nume);
+	if (nume != nullptr)
+	{
+		numeLocatie = new char[strlen(nume) + 1];
+		strcpy_s(numeLocatie, strlen(nume) + 1, nume);
+	}
+	else numeLocatie=nullptr;
 }
 
 int Locatie::getNrLocuri()
@@ -239,6 +271,23 @@ int Locatie::getZone()
 	return zone;
 }
 
+vector<string>  Locatie::getNumeZone()
+{
+	return numeZone;
+}
+
+void Locatie::setNumeZone(vector<string>, int zone)
+{
+	if (zone > 0)
+	{
+		for (unsigned i = 0; i < zone; i++)
+		{
+			this->numeZone.push_back(numeZone[i]);
+
+		}
+	}
+}
+
 float* Locatie::getPret()
 {
 	if (pret == nullptr || zone <= 0)
@@ -267,19 +316,32 @@ void Locatie::setPret(float* pret, int zone)
 	}
 }
 
-string Locatie::getNumeZona()
+int Locatie::getNrLocuriDisponibile()
 {
-	return numeZona;
+	return nrLocuriDisponibile;
 }
 
-void Locatie::setNumeZona(string numeZona)
+void Locatie::setNrLocuriDisponibile(int nrLocuriDisponibile)
 {
-	this->numeZona = numeZona;
+	this->nrLocuriDisponibile = nrLocuriDisponibile;
 }
 
 void Locatie::locuriDisponibile(int nrLocuriOcupate)
 {
 	nrLocuriDisponibile = nrLocuri - nrLocuriOcupate;
+}
+
+void Locatie::ocupareLoc(int loc, int rand)
+{
+	if (sala[loc][rand] == 0)
+	{
+		sala[loc][rand] = 1;
+		cout << "Locul este disponibil!" << endl;
+	}
+	else if (sala[loc][rand] == 1)
+	{
+		cout << "Locul este deja ocupat!" << endl;
+	}
 }
 
 bool Locatie::nrCorectLocuri()
@@ -332,7 +394,7 @@ ostream& operator<<(ostream& out, Locatie locatie)
 	out << "Nr locuri: "<<locatie.nrLocuri << endl;
 	out << "Nr randuri: "<<locatie.nrRanduri << endl;
 	out << "Nr locuri pe rand: "<<locatie.nrLocuriPeRand << endl;
-	out << "Sala: ";
+	out << "Sala: " << endl;
 	if (locatie.sala == nullptr)
 	{
 		out << NULL << endl;;
@@ -349,9 +411,14 @@ ostream& operator<<(ostream& out, Locatie locatie)
 		}
 	}
 	out << "Nr locuri disponibile: " << locatie.nrLocuriDisponibile << endl;
-	out << "Zona: " << locatie.numeZona;
 	out << "Nr zone: " << locatie.zone << endl;
-	out << "Preturi: ";
+	out << "Nume zone: " << endl;
+	for (unsigned i = 0; i < locatie.numeZone.size(); i++)
+	{
+		out << locatie.numeZone[i]<<" ";
+	} 
+	out << endl;
+	out << "Preturi: " << endl;
 	if (locatie.pret == nullptr)
 	{
 		out << NULL << endl;
@@ -363,12 +430,14 @@ ostream& operator<<(ostream& out, Locatie locatie)
 			out << locatie.pret[i] << " ";
 		}
 	}
+	out << endl;
 	return out;
 }
 
 istream& operator>>(istream& in, Locatie& locatie)
 {
 	char sir[100];
+	cout << "Introduceti numele locatiei: " << endl;
 	in >> sir;
 	if (locatie.numeLocatie != nullptr)
 	{
@@ -377,14 +446,18 @@ istream& operator>>(istream& in, Locatie& locatie)
 	}
 	locatie.numeLocatie = new char[strlen(sir)];
 	strcpy_s(locatie.numeLocatie, strlen(sir) + 1, sir);
+	cout << "Introduceti numarul de locuri: " << endl;
 	in >> locatie.nrLocuri;
+	cout << "Introduceti numarul de randuri: " << endl;
 	in >> locatie.nrRanduri;
+	cout << "Introduceti numarul de locuri pe rand: " << endl;
 	in >> locatie.nrLocuriPeRand;
 	if (locatie.sala != nullptr)
 	{
 		delete[] locatie.sala;
 		locatie.sala = nullptr;
 	}
+	cout << "Introduceti organizarea salii:" << endl;
 	locatie.sala = new int* [locatie.nrRanduri];
 	for (int i = 0; i < locatie.nrRanduri; i++)
 		locatie.sala[i] = new int[locatie.nrLocuriPeRand];
@@ -395,14 +468,23 @@ istream& operator>>(istream& in, Locatie& locatie)
 			in >> locatie.sala[i][j];
 		}
 	}
+	cout << "Introduceti numarul de locuri disponibile: " << endl;
 	in >> locatie.nrLocuriDisponibile;
-	in >> locatie.numeZona;
+	cout << "Introduceti numarul de zone: " << endl;
 	in >> locatie.zone;
+	cout << "Introduceti numele zonelor: " << endl;
+	string nume_z;
+	for (unsigned i = 0; i < locatie.zone; i++)
+	{
+		in >> nume_z;
+		locatie.numeZone.push_back(nume_z);
+	}
 	if (locatie.pret != nullptr)
 	{
 		delete[] locatie.pret;
 		locatie.pret = nullptr;
 	}
+	cout << "Introduceti preturile: " << endl;
 	locatie.pret = new float[locatie.zone];
 	for (int i = 0; i < locatie.zone; i++)
 	{

@@ -16,7 +16,7 @@ Eveniment::Eveniment()
 	bileteDisponibile = 0;
 }
 
-Eveniment::Eveniment(char* tipEveniment, char* numeEveniment, char* data, char* ora, int bileteDisponibile)
+Eveniment::Eveniment(char* tipEveniment, char* numeEveniment, char* data, char* ora, int bileteDisponibile, Locatie locatie)
 {
 	if (tipEveniment != nullptr) {
 		this->tipEveniment = new char[strlen(tipEveniment) + 1];
@@ -57,6 +57,7 @@ Eveniment::Eveniment(char* tipEveniment, char* numeEveniment, char* data, char* 
 	{
 		this->bileteDisponibile = 0;
 	}
+	this->locatie = locatie;
 }
 
 Eveniment::Eveniment(const Eveniment& ev)
@@ -333,16 +334,16 @@ void Eveniment::afisare_erori()
 
 ostream& operator<<(ostream& out, Eveniment ev)
 {
-	out << "Tip eveniment: " << ev.tipEveniment;
-	out << "Nume eveniment: " << ev.numeEveniment;
-	out << "Data: " << ev.data;
-	out << "Ora: " << ev.ora;
-	out << "Bilete disponibile: " << ev.bileteDisponibile;
+	out << "Tip eveniment: " << ev.tipEveniment << endl;;
+	out << "Nume eveniment: " << ev.numeEveniment << endl;
+	out << "Data: " << ev.data << endl;
+	out << "Ora: " << ev.ora << endl;
 	return out;
 }
 
 istream& operator>>(istream& in, Eveniment& ev)
 {
+	cout << "Introduceti tipul evenimetului: " << endl;
 	char sir[100];
 	in >> sir;
 	if (ev.tipEveniment != nullptr)
@@ -353,6 +354,7 @@ istream& operator>>(istream& in, Eveniment& ev)
 	ev.tipEveniment = new char[strlen(sir) + 1];
 	strcpy_s(ev.tipEveniment, strlen(sir) + 1, sir);
 
+	cout << "Introduceti numele evenimetului: " << endl;
 	char sir2[100];
 	in >> sir2;
 	if (ev.numeEveniment != nullptr)
@@ -363,6 +365,7 @@ istream& operator>>(istream& in, Eveniment& ev)
 	ev.numeEveniment = new char[strlen(sir2) + 1];
 	strcpy_s(ev.numeEveniment, strlen(sir2) + 1, sir2);
 
+	cout << "Introduceti data evenimetului: " << endl;
 	char sir3[100];
 	in >> sir3;
 	if (ev.data != nullptr)
@@ -373,6 +376,7 @@ istream& operator>>(istream& in, Eveniment& ev)
 	ev.data = new char[strlen(sir3) + 1];
 	strcpy_s(ev.data, strlen(sir3) + 1, sir3);
 
+	cout << "Introduceti ora evenimetului: " << endl;
 	char sir4[100];
 	in >> sir4;
 	if (ev.ora != nullptr)
@@ -382,6 +386,7 @@ istream& operator>>(istream& in, Eveniment& ev)
 	}
 	ev.ora = new char[strlen(sir4) + 1];
 	strcpy_s(ev.ora, strlen(sir4) + 1, sir4);
+	cout << "Introduceti numarul de bilete disponibile: " << endl;
 	in >> ev.bileteDisponibile;
 	return in;
 }
